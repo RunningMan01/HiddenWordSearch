@@ -1,0 +1,13 @@
+1. Modify classes so eg. HiddenWord public methods aren't exposed to calling client - done
+2. Error words should be just a string
+3. If really keen could add error handling to check for valid range of values entered etc.
+
+
+UI front end
+separate javascript object / partial view
+
+partial view - Grid[,] char passed in with List<HiddenWord>
+canvas to draw grid on
+poc array passed in, just draw on canvas
+
+
