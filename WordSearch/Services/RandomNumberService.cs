@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 namespace WordSearch.Services
 {
-    internal class RandomNumberService : IRandomNumberService
+    public class RandomNumberService : IRandomNumberService
     {
         private readonly Random _random;
 

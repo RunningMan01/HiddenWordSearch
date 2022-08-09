@@ -7,14 +7,14 @@ using WordSearch.Entities;
 
 namespace WordSearch.Extensions
 {
-    internal static class Extensions
+    public static class Extensions
     {
-        internal static DirectionEnum GetMax(this DirectionEnum direction)
+        public static DirectionEnum GetMax(this DirectionEnum direction)
         {
             return Enum.GetValues(typeof(DirectionEnum)).Cast<DirectionEnum>().Max() + 1;
         }
 
-        internal static DirectionEnum MoveNext(this DirectionEnum direction)
+        public static DirectionEnum MoveNext(this DirectionEnum direction)
         {            
             var maxDirection = Convert.ToInt32(direction.GetMax());
             var nextDirection = (Convert.ToInt32(direction) + 1) % maxDirection;
@@ -22,7 +22,7 @@ namespace WordSearch.Extensions
             return (DirectionEnum)nextDirection;
         }
         
-        internal static int GetRowDelta(this DirectionEnum direction)
+        public static int GetRowDelta(this DirectionEnum direction)
         {                    
             switch (direction)
             {
@@ -42,7 +42,7 @@ namespace WordSearch.Extensions
             return 0;
         }
 
-        internal static int GetColumnDelta(this DirectionEnum direction)
+        public static int GetColumnDelta(this DirectionEnum direction)
         {
             switch (direction)
             {
@@ -62,19 +62,24 @@ namespace WordSearch.Extensions
             return 0;
         }
 
-        internal static int Rows(this char[,] grid)
+        public static int Rows(this char[,] grid)
         {
             // Value is zero based, ie. 10 rows would return 9, 0 -> 9
             return grid.GetUpperBound(0);
         }
 
-        internal static int Columns(this char[,] grid)
+        public static int Columns(this char[,] grid)
         {
             // Value is zero based, ie. 10 rows would return 9, 0 -> 9
             return grid.GetUpperBound(1);
         }
-               
-        internal static string AsString(this char[,] grid)
+
+        public static string AsString(this char[,] grid) {
+            return AsString(grid, false);
+        }
+
+
+        public static string AsString(this char[,] grid, bool includeNewLine)
         {
             var rows = grid.Rows();
             var columns = grid.Columns();
@@ -86,13 +91,17 @@ namespace WordSearch.Extensions
                 {
                     gridString += grid[row, column];
                 }
-                gridString += Environment.NewLine;
+
+                if (includeNewLine)
+                {
+                    gridString += Environment.NewLine;
+                }
             }
 
             return gridString;
         }
 
-        internal static bool CanPlaceCharacter(this char[,] grid, Location location, char ch)
+        public static bool CanPlaceCharacter(this char[,] grid, Location location, char ch)
         {
             return grid[location.Row, location.Column] == ch || grid[location.Row, location.Column] == ' ';
         }

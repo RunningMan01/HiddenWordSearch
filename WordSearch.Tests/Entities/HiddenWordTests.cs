@@ -23,8 +23,8 @@ namespace WordSearch.Tests.Entities
 
             hiddenWord.GenerateLocationAndDirection(10, 10);
 
-            Assert.True(hiddenWord.Location.Row == 5, "Location Row is incorrect");
-            Assert.True(hiddenWord.Location.Column == 5, "Location Column is incorrect");
+            Assert.True(hiddenWord.StartLocation.Row == 5, "Location Row is incorrect");
+            Assert.True(hiddenWord.StartLocation.Column == 5, "Location Column is incorrect");
             Assert.True(hiddenWord.Direction == DirectionEnum.DownLeft, "Direction is incorrect");
         }
 

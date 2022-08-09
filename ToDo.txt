@@ -8,6 +8,9 @@ separate javascript object / partial view
 
 partial view - Grid[,] char passed in with List<HiddenWord>
 canvas to draw grid on
-poc array passed in, just draw on canvas
+poc array passed in, just draw on canvas 
 
-
+1. Add Configure Word Search option to main menu ?
+2. Start looking at flex grid / grid settings (possibly not bothered about mobile etc.)
+3. Draw words / letters on canvas
+4. List hidden words to side / underneath Grid

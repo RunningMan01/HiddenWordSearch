@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    @*<h1 class="display-4">Welcome</h1>*@
+    <button id="buttonSettings" class="btn btn-primary">Configure Wordsearch</button>
+    @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+</div>
+
+@await Html.PartialAsync("_wordSearch")
+@await Html.PartialAsync("_modalConfigure")
+
+@section Scripts
+{       
+   <script src="js/Home/Index.js"></script>
+   <script src="js/Home/AjaxFunctions.js"></script>
+   <script src="js/Home/WordSearchService.js"></script>
+   <script src="js/Home/WordSearchRender.js"></script>
+}
