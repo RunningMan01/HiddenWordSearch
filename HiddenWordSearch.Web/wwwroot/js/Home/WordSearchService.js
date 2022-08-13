@@ -38,43 +38,54 @@ class WordSearchService {
         return true;
     }
 
+    #isLetterClicked(value) {
+        var clicked = true;
+        if (value < 0) clicked = false;
+        if (value - parseInt(value) >= 0.5) clicked = false;
+        return clicked;
+    }
+
     // ToDo - refactor this method
     letterClicked(x, y) {
-        var offsetY = y + (this.wordSearchRender.fontSize * this.wordSearchRender.scale * 0.5);
-        var row = offsetY / (this.wordSearchRender.fontSize * this.wordSearchRender.scale * 1.0);
-        row = Math.floor(row);
-        if (row < 1 || row > this.hiddenWordSearch.wordGrid.rows) return;
+        5
+        // ToDo - Seperate function - x, y to row, column
+        console.log(`letterClicked: x ${x}, y ${y}`);
+        var row = (y - this.wordSearchRender.fontSize / 2.0) / (this.wordSearchRender.fontSize + this.wordSearchRender.gap);
+        var column = (x - this.wordSearchRender.fontSize / 2.0) / (this.wordSearchRender.fontSize + this.wordSearchRender.gap);
 
-        var offsetX = x + (this.wordSearchRender.fontSize * this.wordSearchRender.scale * 0.5);
-        var column = offsetX / (this.wordSearchRender.fontSize * this.wordSearchRender.scale * 1.0);
+        // if letter is not directly clikced on then reutnr
+        if (!(this.#isLetterClicked(row) && this.#isLetterClicked(column))) return;
+        row = Math.floor(row);
         column = Math.floor(column);
-        if (column < 1 || this.hiddenWordSearch.wordGrid.columns > 10) return;        
+
+        console.log(`letterClicked ${row}, ${column}`);5       
        
         if (this.startLetterSelected) {
             console.log("start letter is selected");
             // start letter previously selected, check the letter just selected and the start is one
             // of the hidden words
             var endLetterLocation = {
-                row: row - 1,
-                column: column - 1
+                row: row,
+                column: column
             }
             var hiddenWord = this.#findHiddenWord(this.startLetterLocation, endLetterLocation);
             if (hiddenWord != null) {
                 this.wordSearchRender.highlightWord(this.startLetterLocation, endLetterLocation);
                 // this.wordSearchRender.crossOutWord(hiddenWord);
-                this.startLetterSelected = false;
-                this.startLetterLocation = null;
-            }            
+            }
+
+            this.startLetterSelected = false;
+            this.startLetterLocation = null;
         }
         else {
             console.log("start letter not selected");
             // start letter clicked on, store this
             this.startLetterSelected = true;
             this.startLetterLocation = {
-                row: row - 1,
-                column: column - 1
+                row: row,
+                column: column
             }
-            this.wordSearchRender.highlightLetter(row, column);
+            this.wordSearchRender.highlightLetter(this.startLetterLocation);
         }        
     }
 }

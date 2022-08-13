@@ -14,3 +14,6 @@ poc array passed in, just draw on canvas
 2. Start looking at flex grid / grid settings (possibly not bothered about mobile etc.)
 3. Draw words / letters on canvas
 4. List hidden words to side / underneath Grid
+5. When selecting a hidden word, make sure crossed out words aren't re-selected
+6. Need to copy area overwritten when initial letter is selected, to be replaced if hidden word
+   is not selected
