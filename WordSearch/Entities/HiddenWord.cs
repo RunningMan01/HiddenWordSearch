@@ -76,11 +76,6 @@ namespace WordSearch.Entities
             };
 
             return location;
-
-            //return new Location() { 
-            //    Row = StartLocation.Row + (Direction.GetRowDelta() * Word.Length) - 1,
-            //    Column = StartLocation.Column  + (Direction.GetColumnDelta() * Word.Length) - 1
-            //};
         }
 
         public void SetEndLocation()

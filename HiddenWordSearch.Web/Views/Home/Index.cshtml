@@ -2,11 +2,17 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    @*<h1 class="display-4">Welcome</h1>*@
-    <button id="buttonSettings" class="btn btn-primary">Configure Wordsearch</button>
-    @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+<div id="cardWelcome" class="card">
+  <div class="card-header">
+    Generate Word Search
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Generate Word Search</h5>
+    <p class="card-text">Click Configure Word Search to specify and create a new Word Search Grid.</p>
+    <a id="buttonConfigure" href="#" class="btn btn-primary">Configure Word Search</a>
+  </div>
 </div>
+&nbsp
 
 @await Html.PartialAsync("_wordSearch")
 @await Html.PartialAsync("_modalConfigure")

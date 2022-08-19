@@ -12,8 +12,7 @@ class WordSearchService {
             this.hiddenWordSearch = hiddenWordSearch;
         }        
     }
-
-    // ToDo - this isn't working. Cant seem to find valid words, might be comapring 0 based against 1 based ??
+    
     #findHiddenWord(startLetterLocation, endLetterLocation) {
 
         var numHiddenWords = this.hiddenWordSearch.hiddenWords.length;
@@ -45,9 +44,15 @@ class WordSearchService {
         return clicked;
     }
 
+    #startLocationClickedAgain (startLetterLocation, endLetterLocation) {
+        if (startLetterLocation.x != endLetterLocation.x) return false;
+        if (startLetterLocation.y != endLetterLocation.y) return false;
+
+        return true;
+    }
+
     // ToDo - refactor this method
-    letterClicked(x, y) {
-        5
+    letterClicked(x, y) {        
         // ToDo - Seperate function - x, y to row, column
         console.log(`letterClicked: x ${x}, y ${y}`);
         var row = (y - this.wordSearchRender.fontSize / 2.0) / (this.wordSearchRender.fontSize + this.wordSearchRender.gap);
@@ -58,20 +63,27 @@ class WordSearchService {
         row = Math.floor(row);
         column = Math.floor(column);
 
-        console.log(`letterClicked ${row}, ${column}`);5       
+        console.log(`letterClicked ${row}, ${column}`);    
        
         if (this.startLetterSelected) {
-            console.log("start letter is selected");
+            console.log("start letter has previously been selected selected");
+
             // start letter previously selected, check the letter just selected and the start is one
             // of the hidden words
             var endLetterLocation = {
                 row: row,
                 column: column
             }
+
+            if (this.#startLocationClickedAgain(this.startLetterLocation, endLetterLocation)) {
+                // replace letter image as it was
+                this.wordSearchRender.replaceLetterimage(this.startLetterLocation);
+            }
+
             var hiddenWord = this.#findHiddenWord(this.startLetterLocation, endLetterLocation);
             if (hiddenWord != null) {
                 this.wordSearchRender.highlightWord(this.startLetterLocation, endLetterLocation);
-                // this.wordSearchRender.crossOutWord(hiddenWord);
+                this.wordSearchRender.crossOutWord(hiddenWord.word);
             }
 
             this.startLetterSelected = false;
@@ -85,6 +97,7 @@ class WordSearchService {
                 row: row,
                 column: column
             }
+            this.wordSearchRender.copyLetterImage(this.startLetterLocation);
             this.wordSearchRender.highlightLetter(this.startLetterLocation);
         }        
     }

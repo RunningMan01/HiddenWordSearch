@@ -7,8 +7,7 @@ var _hiddenWordSearch;
 var _startSelected = false;
 
 window.onload = function () {
-    // alert("page loaded");
-    var buttonSettings = document.getElementById("buttonSettings");
+    var buttonSettings = document.getElementById("buttonConfigure");
     buttonSettings.addEventListener("click", showSettingsModal);
 
     var buttonCreateWordsearch = document.getElementById("buttonCreateWordsearch");

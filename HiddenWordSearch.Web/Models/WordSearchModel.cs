@@ -9,5 +9,7 @@ namespace HiddenWordSearch.Web.Models
         public List<HiddenWord> HiddenWords { get; set; }
 
         public WordGridModel WordGrid { get; set; }
+
+        public string Title { get; set; }
     }
 }

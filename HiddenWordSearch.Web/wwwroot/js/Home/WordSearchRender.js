@@ -1,11 +1,9 @@
 ﻿'use strict';
 
-//var grid;
-// var colours = ["red", "green", "blue", "purple", "orange"];
-
 class WordSearchRender {
     #colours = ["red", "green", "blue", "purple", "orange"];
     #currentColour = 0;
+    #startLetterImage = null;
 
     constructor(canvasId) {
         this.canvasId = canvasId;
@@ -17,68 +15,76 @@ class WordSearchRender {
         this.grid = null;
     }
 
-    #createCanvas(hiddenWordSearch) {
-        var canvasWidth = (hiddenWordSearch.wordGrid.rows + 1) * (this.fontSize + this.gap);
-        var canvasHeight = (hiddenWordSearch.wordGrid.columns + 1) * (this.fontSize + this.gap);
+    #createWordSearchCanvas(hiddenWordSearch) {
+        //var canvasWidth = (hiddenWordSearch.wordGrid.columns + 1) * (this.fontSize + this.gap);
+        //var canvasHeight = (hiddenWordSearch.wordGrid.rows + 1) * (this.fontSize + this.gap);
 
-        //window.devicePixelRatio = this.scale;
-        this.canvas.style.width = canvasWidth;
-        this.canvas.style.height = canvasHeight;
-        //var scale = window.devicePixelRatio;
+        var canvasWidth = (hiddenWordSearch.wordGrid.columns) * (this.fontSize + this.gap) + (this.fontSize / 2.0);
+        var canvasHeight = (hiddenWordSearch.wordGrid.rows) * (this.fontSize + this.gap); // + this.gap;
+     
+        //this.canvas.style.width = canvasWidth;
+        //this.canvas.style.height = canvasHeight;     
 
-        this.canvas.width = canvasWidth; // Math.floor(canvasWidth * scale);
-        this.canvas.height = canvasHeight; // Math.floor(canvasHeight * scale);
-
-        //this.ctx.scale(scale, scale);
+        this.canvas.width = canvasWidth;
+        this.canvas.height = canvasHeight;
         
         this.ctx.textAlign = "center";
         this.ctx.textBaseline = "middle";
-        this.ctx.font = "24px Comic Sans MS"; // "14px Comic Sans MS";
-        // this.fontSize = 14;
+        this.ctx.font = "24px Arial Black";
+
+        var wordSearch = document.getElementById("wordSearch");
+        wordSearch.style = "visibility: visible";
     }
 
-    renderGrid(hiddenWordSearch) {
-        var rowPos = this.fontSize; // + this.gap;
-        var columnPos = this.fontSize; // + this.gap;
-        //var gap = this.fontSize / 1.25;
+    #createWordSearchGrid(hiddenWordSearch) {
+        var columnPos = this.fontSize;
+        var rowPos = this.fontSize;
         var idx = 0;
 
-        this.grid = new Array(hiddenWordSearch.wordGrid.rows);
-        this.#createCanvas(hiddenWordSearch);
-
         for (var row = 1; row <= hiddenWordSearch.wordGrid.rows; row++) {
-            // var rowArray = new Array(hiddenWordSearch.wordGrid.columns)
             this.grid[row - 1] = new Array(hiddenWordSearch.wordGrid.columns);
-            for (var column = 1; column <= hiddenWordSearch.wordGrid.columns; column++) { 
+            for (var column = 1; column <= hiddenWordSearch.wordGrid.columns; column++) {
                 var letter = hiddenWordSearch.wordGrid.grid.charAt(idx);
-                //console.log(`Drawing letter at ${columnPos}, ${rowPos}`);
                 this.ctx.fillText(letter, columnPos, rowPos);
-                // ToDo - following is temporary
-                // this.#drawLine(columnPos, rowPos);
 
-                //rowArray[column-1] = letter;
                 this.grid[row - 1][column - 1] = letter;
                 idx++;
                 columnPos = columnPos + this.fontSize + this.gap;
             }
-            // console.log(rowStr);
-            //grid[row - 1] = rowArray;
             rowPos = rowPos + this.fontSize + this.gap;
-            // ToDo - following is temporary
-            // this.#drawLine(columnPos, rowPos);
-            columnPos = this.fontSize;// + this.gap;
-        }        
-    }
-    // ToDo - this is temporary
-    #drawLine(x, y) {
-        // console.log(`#drawLine: x ${x}, y ${y}`);
-        this.ctx.beginPath();
-        this.ctx.moveTo(0, y);
-        this.ctx.lineTo(100, y);
-        this.ctx.stroke();
+            columnPos = this.fontSize;
+        }
     }
 
-    //ToDo - calling this but wrong values for Row and Column
+    #displayHiddenWordList(hiddenWordSearch) {
+        var numWords = hiddenWordSearch.hiddenWords.length;
+        var divWordList = document.getElementById("divWordList");
+        divWordList.innerHTML = '';        
+
+        var list = document.createElement("ul");
+        divWordList.appendChild(list);
+
+        for (var idx = 0; idx < numWords; idx++) {
+            console.log(`${hiddenWordSearch.hiddenWords[idx].word}`);
+            var item = document.createElement("p");
+            // item.setAttribute("index", idx);
+            item.setAttribute("word", hiddenWordSearch.hiddenWords[idx].word);
+            item.classList.add("hiddenWord");
+            item.innerHTML = hiddenWordSearch.hiddenWords[idx].word;
+            list.appendChild(item);
+        }
+    }
+
+    renderGrid(hiddenWordSearch) {
+        this.grid = new Array(hiddenWordSearch.wordGrid.rows); // ToDo - not sure about this line, move it
+        this.#hideElement("cardWelcome");
+        this.#showElement("cardWordSearch");        
+        this.#setWordSearchTitle(hiddenWordSearch.title)
+        this.#createWordSearchCanvas(hiddenWordSearch);
+        this.#createWordSearchGrid(hiddenWordSearch);
+        this.#displayHiddenWordList(hiddenWordSearch);
+    }
+   
     highlightLetter(location) {
         // given the row and column, find centre point of the letter
         console.log(`highlightLetter: Row ${location.row}, Column ${location.column}`);              
@@ -88,6 +94,21 @@ class WordSearchRender {
         var letter = this.grid[location.row][location.column];
         this.#drawCircle(screenPos.x, screenPos.y);
         this.#drawLetter(screenPos.x, screenPos.y, "white", letter);
+    }
+
+    #setWordSearchTitle(title) {
+        var element = document.getElementById("wordSearchDisplayTitle");
+        element.innerText = title;
+    }
+
+    #hideElement(id) {
+        var element = document.getElementById(id);
+        element.style = "display:none";
+    }
+
+    #showElement(id) {
+        var element = document.getElementById(id);
+        element.style = "display:block";
     }
 
     #getIncrement(startPosition, endPosition) {
@@ -157,6 +178,20 @@ class WordSearchRender {
         } while (!reachedEnd);
     }
 
+    copyLetterImage(startLetterLocation) {
+        var screenPos = this.#getScreenPositionFromRowColumn(startLetterLocation.row, startLetterLocation.column);
+        screenPos.x -= this.fontSize / 2.0;
+        screenPos.y -= this.fontSize / 2.0;
+        this.#startLetterImage = this.ctx.getImageData(screenPos.x, screenPos.y, this.fontSize, this.fontSize);
+    }
+
+    replaceLetterimage(startLetterLocation) {
+        var screenPos = this.#getScreenPositionFromRowColumn(startLetterLocation.row, startLetterLocation.column);
+        screenPos.x -= this.fontSize / 2.0;
+        screenPos.y -= this.fontSize / 2.0;
+        this.ctx.putImageData(this.#startLetterImage, screenPos.x, screenPos.y);
+    }
+
     // ToDo - sort out colour selection - use module level var
     highlightWord(startLocation, endLocation) {
         //var colour = this.#getCurrentColour;
@@ -197,5 +232,15 @@ class WordSearchRender {
     #drawLetter(x, y, colour, letter) {
         this.ctx.fillStyle = "white";
         this.ctx.fillText(letter, x, y);
+    }
+
+    crossOutWord(word) {
+        word = word.toUpperCase();
+
+        var selector = "p[word='" + word + "']";
+        var hiddenWord = document.querySelector(selector);
+        if (hiddenWord != null) {
+            hiddenWord.style.textDecoration = "line-through";
+        }
     }
 }

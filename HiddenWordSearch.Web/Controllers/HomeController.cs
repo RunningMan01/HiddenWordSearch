@@ -35,14 +35,16 @@ namespace HiddenWordSearch.Web.Controllers
         [HttpPost]
         public IActionResult GetWordSearch([FromBody]WordSearchSettingsModel settings)
         {
+            var title = settings.Title;
             var rows = Convert.ToInt32(settings.Rows);
             var cols = Convert.ToInt32(settings.Cols);
             var hiddenWords = new List<string>(settings.Words.Split(','));
 
             // ToDo - check what we're passing back, wordgrid is undefined
-            var hiddenWordSearch = new WordSearch.HiddenWordSearch(rows, cols, hiddenWords);
+            var hiddenWordSearch = new WordSearch.HiddenWordSearch(title, rows, cols, hiddenWords);
 
             var wordSearchModel = new WordSearchModel();
+            wordSearchModel.Title = title;
             wordSearchModel.HiddenWords = hiddenWordSearch.HiddenWords;
             wordSearchModel.WordGrid = new WordGridModel()
             {

@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\WordSearch\**" />
+    <Content Remove="Views\WordSearch\**" />
+    <EmbeddedResource Remove="Views\WordSearch\**" />
+    <None Remove="Views\WordSearch\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.9" />
   </ItemGroup>
 

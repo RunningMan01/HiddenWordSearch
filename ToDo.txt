@@ -2,7 +2,6 @@
 2. Error words should be just a string
 3. If really keen could add error handling to check for valid range of values entered etc.
 
-
 UI front end
 separate javascript object / partial view
 
@@ -10,10 +9,17 @@ partial view - Grid[,] char passed in with List<HiddenWord>
 canvas to draw grid on
 poc array passed in, just draw on canvas 
 
+* Configuring row and column different to 10 doesn't resize correctly
+* Place words on grid starting with the longest first
+* Display words that are hidden in alphabetical order
+* Display title header within renderGrid method
 1. Add Configure Word Search option to main menu ?
 2. Start looking at flex grid / grid settings (possibly not bothered about mobile etc.)
-3. Draw words / letters on canvas
 4. List hidden words to side / underneath Grid
 5. When selecting a hidden word, make sure crossed out words aren't re-selected
+
+
+Done 
 6. Need to copy area overwritten when initial letter is selected, to be replaced if hidden word
-   is not selected
+   is not selected (Done)
+3. Draw words / letters on canvas

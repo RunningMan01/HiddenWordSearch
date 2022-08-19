@@ -2,7 +2,6 @@
 {
     public class WordSearchSettingsModel
     { 
-
         public string Title { get; set; } = string.Empty;
         public int Rows { get; set; }
         public int Cols { get; set; }
