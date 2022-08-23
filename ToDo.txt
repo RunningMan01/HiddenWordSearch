@@ -9,11 +9,8 @@ partial view - Grid[,] char passed in with List<HiddenWord>
 canvas to draw grid on
 poc array passed in, just draw on canvas 
 
-* Configuring row and column different to 10 doesn't resize correctly
-* Place words on grid starting with the longest first
-* Display words that are hidden in alphabetical order
-* Display title header within renderGrid method
-1. Add Configure Word Search option to main menu ?
+* Add new javascript file with general html manipulation methods - set text, add event etc.
+* Add error checking on within HiddenWordSeach control (C#) - eg. Title must be specified, no words greater than rows / columns etc.
 2. Start looking at flex grid / grid settings (possibly not bothered about mobile etc.)
 4. List hidden words to side / underneath Grid
 5. When selecting a hidden word, make sure crossed out words aren't re-selected
@@ -23,3 +20,4 @@ Done
 6. Need to copy area overwritten when initial letter is selected, to be replaced if hidden word
    is not selected (Done)
 3. Draw words / letters on canvas
+* Configuring row and column different to 10 doesn't resize correctly

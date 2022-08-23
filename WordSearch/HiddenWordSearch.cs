@@ -12,8 +12,7 @@ namespace WordSearch
 
         public List<HiddenWord> HiddenWords => _hiddenWords;
         public WordGrid WordGrid => _wordGrid;
-        public List<string> ErrorWords => _errorWords;
-       
+        public List<string> ErrorWords => _errorWords;       
 
         public HiddenWordSearch(string title, int rows, int columns, List<string> words)
         {                    
@@ -40,9 +39,8 @@ namespace WordSearch
                 {
                     _errorWords.Add(word);
                 }
-            }
-
-            _wordGrid.PopulateEmptySpaces();  
+            }            
+            _wordGrid.PopulateEmptySpaces();
         }
     }
 }

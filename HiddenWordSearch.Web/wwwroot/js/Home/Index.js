@@ -3,6 +3,7 @@
 var _modalSettings;
 var _wordSearchRender;
 var _wordSearchService;
+var _configureModal;
 var _hiddenWordSearch;
 var _startSelected = false;
 
@@ -10,21 +11,16 @@ window.onload = function () {
     var buttonSettings = document.getElementById("buttonConfigure");
     buttonSettings.addEventListener("click", showSettingsModal);
 
-    var buttonCreateWordsearch = document.getElementById("buttonCreateWordsearch");
-    buttonCreateWordsearch.addEventListener("click", createWordSearch);
-
     var canvasGrid = document.getElementById("canvasGrid");
     canvasGrid.addEventListener("click", canvasGridClicked);
 
+    _configureModal = new ConfigureModal(createWordSearch);
     _wordSearchRender = new WordSearchRender("canvasGrid");
     _wordSearchService = new WordSearchService(_wordSearchRender);
 }
 
 function showSettingsModal() {
-    _modalSettings = new bootstrap.Modal(document.getElementById('exampleModal'), {
-        keyboard: false
-    })
-    _modalSettings.show();
+    _configureModal.showConfigureModal();
 }
 
 function createWordSearch() {
@@ -37,7 +33,8 @@ function createWordSearch() {
    
     var ajaxFunctions = new AjaxFunctions();
     ajaxFunctions.requestWithCallback("/Home/GetWordSearch", wordSearchSettings, wordSearchCreatedCallback);
-    _modalSettings.hide();
+
+    _configureModal.hideConfigureModal();
 }
 
 function wordSearchCreatedCallback(hiddenWordSearch) {

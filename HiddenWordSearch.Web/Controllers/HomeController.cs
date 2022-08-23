@@ -45,7 +45,7 @@ namespace HiddenWordSearch.Web.Controllers
 
             var wordSearchModel = new WordSearchModel();
             wordSearchModel.Title = title;
-            wordSearchModel.HiddenWords = hiddenWordSearch.HiddenWords;
+            wordSearchModel.HiddenWords = hiddenWordSearch.HiddenWords.OrderBy(x => x.Word).ToList();
             wordSearchModel.WordGrid = new WordGridModel()
             {
                 Rows = hiddenWordSearch.WordGrid.Rows,
