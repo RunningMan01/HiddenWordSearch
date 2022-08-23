@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WordSearch.Interfaces
 {
-    internal interface IRandomNumberService
+    public interface IRandomNumberService
     {
         int GetRandomNumber(int min, int max);
         int GetRandomNumber(int max);

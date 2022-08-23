@@ -11,42 +11,43 @@ namespace WordSearch.Entities
     public class HiddenWord
     {
         public string Word { get; set; }
-        public Location Location { get; set; }
-        private Location StartLocation { get; set; }
-        private DirectionEnum StartDirection { get; set; }
+        public Location StartLocation { get; set; }
+        public Location EndLocation { get; set; }
+        private Location TempLocation { get; set; }
+        private DirectionEnum TempDirection { get; set; }
         public DirectionEnum Direction { get; set; }
-        internal bool BackToStart => Location.Equals(StartLocation) && Direction.Equals(StartDirection);
+        public bool BackToStart => StartLocation.Equals(TempLocation) && Direction.Equals(TempDirection);
 
         private readonly IRandomNumberService _randomNumberService;
 
-        internal HiddenWord(IRandomNumberService randomNumberService)
+        public HiddenWord(IRandomNumberService randomNumberService)
         {
             _randomNumberService = randomNumberService;
         }
-      
-        internal void GenerateLocationAndDirection (int rows, int columns)
+
+        public void GenerateLocationAndDirection (int rows, int columns)
         {                     
             var row = _randomNumberService.GetRandomNumber (rows);
             var column = _randomNumberService.GetRandomNumber(columns);
 
             // set initial random location
-            Location  = new Location() { Row = row, Column = column };
-            StartLocation = Location;
+            StartLocation  = new Location() { Row = row, Column = column };
+            TempLocation = StartLocation;
 
             Direction = (DirectionEnum)_randomNumberService.GetRandomNumber (Convert.ToInt32(Direction.GetMax()));
-            StartDirection = Direction;
+            TempDirection = Direction;
         }
-      
-        internal void MoveNext(char[,] grid)
+
+        public void MoveNext(char[,] grid)
         {
-            Location = Location.MoveNext(grid.Rows(), grid.Columns());
-            if (Location == StartLocation)
+            StartLocation = StartLocation.MoveNext(grid.Rows(), grid.Columns());
+            if (StartLocation == TempLocation)
             {
                 Direction = Direction.MoveNext();
             }
         }
 
-        internal bool IsValid()
+        public bool IsValid()
         {
             foreach(var ch in Word)
             {                
@@ -60,15 +61,26 @@ namespace WordSearch.Entities
             return true;
         }
 
-        internal Location GetEndLocation()
+        public Location GetEndLocation()
         {          
-            ArgumentNullException.ThrowIfNull(Location);
+            ArgumentNullException.ThrowIfNull(StartLocation);
             ArgumentNullException.ThrowIfNull(Direction);
 
-            return new Location() { 
-                Row = Location.Row + (Direction.GetRowDelta() * Word.Length),
-                Column = Location.Column  + (Direction.GetColumnDelta() * Word.Length)
+            var row = StartLocation.Row + (Direction.GetRowDelta() * (Word.Length - 1));
+            var column = StartLocation.Column + (Direction.GetColumnDelta() * (Word.Length - 1));
+
+            var location = new Location()
+            {
+                Row = row,
+                Column = column
             };
+
+            return location;
+        }
+
+        public void SetEndLocation()
+        {
+            EndLocation = GetEndLocation();
         }
     }
 }

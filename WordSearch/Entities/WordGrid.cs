@@ -11,13 +11,21 @@ namespace WordSearch.Entities
 {
     public class WordGrid
     {
-        internal int Rows { get; set; }
-        internal int Columns { get; set; }
-        internal char[,] _grid;
+        //ToDo - not sure whether this should be internal or public
+        public int Rows { get; set; }
+        public int Columns { get; set; }
+        public char[,] Grid
+        {
+            get {
+                return _grid;
+            }
+        }
+
+        private char[,] _grid;
 
         private readonly IRandomNumberService _randomNumberService;
 
-        internal WordGrid(IRandomNumberService randomNumberService, int rows, int columns)
+        public WordGrid(IRandomNumberService randomNumberService, int rows, int columns)
         {
             Rows = rows;
             Columns = columns;
@@ -35,7 +43,7 @@ namespace WordSearch.Entities
             }
         }      
 
-        internal bool PlaceWordInGrid(HiddenWord word)
+        public bool PlaceWordInGrid(HiddenWord word)
         {
             // Console.WriteLine($"Placing word {word.Word})");
             var canPlaceWordInGrid = false;
@@ -62,7 +70,7 @@ namespace WordSearch.Entities
             return canPlaceWordInGrid;
         }
 
-        internal void PopulateEmptySpaces()
+        public void PopulateEmptySpaces()
         {
             for (var row = 0; row < Rows; row++)
             {

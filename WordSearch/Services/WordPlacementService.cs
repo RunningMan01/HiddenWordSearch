@@ -9,12 +9,12 @@ using WordSearch.Interfaces;
 
 namespace WordSearch.Services
 {
-    internal class WordPlacementService : IWordPlacementService
+    public class WordPlacementService : IWordPlacementService
     {
         public bool CanWordStartAtLocation(HiddenWord word, char[,] grid)
         {
             var canStart = true;
-            var location = word.Location;
+            var startlocation = word.StartLocation;
             var rowDelta = word.Direction.GetRowDelta();
             var columnDelta = word.Direction.GetColumnDelta();
 
@@ -22,8 +22,8 @@ namespace WordSearch.Services
             {
                 var characterLocation = new Location()
                 {
-                    Row = location.Row + (idx * rowDelta),
-                    Column = location.Column + (idx * columnDelta)
+                    Row = startlocation.Row + (idx * rowDelta),
+                    Column = startlocation.Column + (idx * columnDelta)
                 };
 
                 if (!grid.CanPlaceCharacter(characterLocation, word.Word[idx]))
@@ -44,11 +44,11 @@ namespace WordSearch.Services
 
             for (var idx = 0; idx < word.Word.Length; idx++)
             {                
-                var wordLetterRow = word.Location.Row + (idx * rowDelta);
-                var wordLetterColumn = word.Location.Column + (idx * columnDelta);
-                updatedGrid[wordLetterRow, wordLetterColumn] = word.Word[idx];              
+                var wordLetterRow = word.StartLocation.Row + (idx * rowDelta);
+                var wordLetterColumn = word.StartLocation.Column + (idx * columnDelta);
+                updatedGrid[wordLetterRow, wordLetterColumn] = word.Word[idx];
             }
-
+            word.SetEndLocation();
             return updatedGrid;
         }
 

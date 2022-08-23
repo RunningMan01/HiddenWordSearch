@@ -7,7 +7,7 @@ using WordSearch.Entities;
 
 namespace WordSearch.Interfaces
 {
-    internal interface IWordPlacementService
+    public interface IWordPlacementService
     {
         //bool IsValidWord(string word);
 
