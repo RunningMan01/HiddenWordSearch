@@ -4,7 +4,7 @@ using WordSearch.Services;
 
 namespace WordSearch
 {
-    public class HiddenWordSearch
+    public class WordSearchGrid
     {
         private WordGrid _wordGrid;
         private List<HiddenWord> _hiddenWords = new List<HiddenWord>();
@@ -14,7 +14,7 @@ namespace WordSearch
         public WordGrid WordGrid => _wordGrid;
         public List<string> ErrorWords => _errorWords;       
 
-        public HiddenWordSearch(string title, int rows, int columns, List<string> words)
+        public WordSearchGrid(string title, int rows, int columns, List<string> words)
         {                    
             IRandomNumberService randomNumberService = new RandomNumberService();
 

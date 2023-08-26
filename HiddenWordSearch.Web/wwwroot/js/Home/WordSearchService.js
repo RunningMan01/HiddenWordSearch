@@ -14,7 +14,8 @@ class WordSearchService {
         }        
     }
 
-    // finds the user selected word within the list of hidden words. returns the hidden word if found
+    // User has selected a potential word, check to see if this potential word matches
+    // the list of words in the list to find    
     #findHiddenWord(startLetterLocation, endLetterLocation) {
         var numHiddenWords = this.hiddenWordSearch.hiddenWords.length;
         var hiddenWords = this.hiddenWordSearch.hiddenWords;
@@ -39,6 +40,7 @@ class WordSearchService {
     }
 
     // returns true if user has clicked on an actual letter, rather than a gap between the letters
+    // value is either row or column clicked on, could be a part value
     #isLetterClicked(value) {
         var clicked = true;
         if (value < 0) clicked = false;
@@ -54,15 +56,20 @@ class WordSearchService {
         return true;
     }
 
-    // ToDo - refactor this method
-    letterClicked(x, y) {        
-        // ToDo - Seperate function - x, y to row, column
-        console.log(`letterClicked: x ${x}, y ${y}`);
-        var row = (y - this.wordSearchRender.fontSize / 2.0) / (this.wordSearchRender.fontSize + this.wordSearchRender.gap);
-        var column = (x - this.wordSearchRender.fontSize / 2.0) / (this.wordSearchRender.fontSize + this.wordSearchRender.gap);
+    #getGridPositionFromScreenPosition(screenPosition) {
+        var gridPosition = (screenPosition - this.wordSearchRender.fontSize / 2.0) / (this.wordSearchRender.fontSize + this.wordSearchRender.gap);
+        return gridPosition;
+    }
+    
+    letterClicked(screenX, screenY) {                
+        console.log(`letterClicked: x ${screenX}, y ${screenY}`);
+        
+        var row = this.#getGridPositionFromScreenPosition(screenY);
+        var column = this.#getGridPositionFromScreenPosition(screenX);
 
-        // if letter is not directly clicked on then return
+        // if a letter is not directly clicked on then return
         if (!(this.#isLetterClicked(row) && this.#isLetterClicked(column))) return;
+
         row = Math.floor(row);
         column = Math.floor(column);
 
@@ -71,17 +78,17 @@ class WordSearchService {
         if (this.startLetterSelected) {
             console.log("start letter has previously been selected");
 
-            // start letter previously selected, check the letter just selected and the start is one
-            // of the hidden words
+            // start letter was previously selected
             var endLetterLocation = { row: row, column: column }
 
             if (this.#startLocationClickedAgain(this.startLetterLocation, endLetterLocation)) {
-                // replace letter image as it was
+                // replace saved letter image as start letter was clicked again
                 this.wordSearchRender.replaceLetterImage(this.startLetterLocation);
             }
             else {
                 var hiddenWord = this.#findHiddenWord(this.startLetterLocation, endLetterLocation);
                 if (hiddenWord != null) {
+                    // User has correctly identified the start and end letter of a hidden word
                     this.wordSearchRender.highlightWord(this.startLetterLocation, endLetterLocation);
                     this.wordSearchRender.crossOutWord(hiddenWord.word);
                 }
@@ -91,12 +98,13 @@ class WordSearchService {
             this.startLetterLocation = null;
         }
         else {
-            // start letter clicked on, store this
+            // User has clicked on start letter, store this
             this.startLetterSelected = true;
             this.startLetterLocation = {
                 row: row,
                 column: column
             }
+            // Store image of start letter and highlight it
             this.wordSearchRender.copyLetterImage(this.startLetterLocation);
             this.wordSearchRender.highlightLetter(this.startLetterLocation);
         }        

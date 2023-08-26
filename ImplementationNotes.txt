@@ -1,0 +1,121 @@
+
+Project: HiddenWordSearch.Web
+
+Models
+   ErrorViewModel.cs - Default used by Error.cshtml
+   WordGridModel.cs
+        public int Rows { get; set;  }
+        public int Columns { get; set; }
+        public string Grid { get; set; } = string.Empty;
+
+   WordSearchModel.cs
+        public List<HiddenWord> HiddenWords { get; set; }
+        public WordGridModel WordGrid { get; set; }
+        public string Title { get; set; }
+
+   WordSearchSettingsModel.cs
+        public string Title { get; set; } = string.Empty;
+        public int Rows { get; set; }
+        public int Cols { get; set; }
+        public string Words { get; set; } = string.Empty;
+wwwroot
+css
+   site.css
+
+js
+   Home
+   AjaxFunctions.js
+      requestWithCallback(url, settings, callback)
+
+   ConfigureModel.js
+       showConfigureModal()
+       hideConfigureModal()
+
+   Index.js      
+      window.onload
+      showSettingsModal()
+      createWordSearch()
+      wordSearchCreatedCallback(hiddenWordSearch)
+      canvasGridClicked(evt)
+
+   WordSearchRender.js
+      constructor
+      crossOutWord
+      copyLetterImage(startLetterLocation)
+          Creates a copy of the image / graphic of the start letter just clicked on. This is restored if ultimately a correct word
+          is not found. Image / Graphic is restored in method replaceLetterImage
+
+      replaceLetterImage(startLetterLocation) 
+          restores imgae / graphic copied in copyLetterImage method when a start letter was selected. Subsequent word selected
+          was not a valid word so redraw start letter to how it was
+    
+      highlightWord(startLocation, endLocation)
+          draws a line to highlight the found hidden word
+ 
+
+    // draws word search grid
+    renderGrid(hiddenWordSearch) 
+
+    // highlights the letter given by location, used when user clicks on a start letter
+    highlightLetter(location) 
+
+    // create canvas that word search grid will be drawn on
+    #createWordSearchCanvas(hiddenWordSearch) 
+
+    // draw all letters of the grid on the page
+    #createWordSearchGrid(hiddenWordSearch) 
+
+    // display all hidden words on page
+    #displayHiddenWordList(hiddenWordSearch) 
+
+    // set innterTest of given element id
+    #setWordSearchTitle(title) 
+
+    // make sure the element given by id is not visible
+    #hideElement(id) 
+
+    // make sure the element given by id is visible
+    #showElement(id) 
+
+    // given the start and end positions, return the increment required to get from start to end
+    // end is either in same plane as start, before it or after it
+    #getIncrement(startPosition, endPosition) 
+
+    // highlights just the letters of the word after main rectangle to highlight is drawn
+    #fillInLetters(startLocation, endLocation) 
+    // returns actual x, y position relative to top left corner of the canvas, given the row and column
+    #getScreenPositionFromRowColumn(row, column) 
+
+    // highlights a selected word on the grid
+    #fillInWord(startLocation, endLocation, colour) 
+
+    // get next colour to use when highlighting the selected word
+    #getCurrentColour() 
+
+    // pick next colour in sequence of colours
+    #pickNextColour() 
+
+    // draws the circle to highlight the starting letter the user has selected
+    #drawCircle(x, y) 
+
+    // draws the highlighted letter white to stand out a bit more
+    #drawLetter(x, y, colour, letter) 
+
+}
+
+
+
+
+
+
+
+
+   WordSearchService.js
+
+Controllers
+   HomeController.cs
+
+Views
+  _modalConfigure.cshtml
+  _wordSearch.cshtml
+  Index.cshtml

@@ -21,4 +21,8 @@
     <ProjectReference Include="..\WordSearch\WordSearch.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Views\WordSearch\Index.cshtml" />
+  </ItemGroup>
+
 </Project>

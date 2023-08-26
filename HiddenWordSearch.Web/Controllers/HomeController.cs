@@ -37,11 +37,10 @@ namespace HiddenWordSearch.Web.Controllers
         {
             var title = settings.Title;
             var rows = Convert.ToInt32(settings.Rows);
-            var cols = Convert.ToInt32(settings.Cols);
+            var cols = Convert.ToInt32(settings.Columns); // Cols
             var hiddenWords = new List<string>(settings.Words.Split(','));
-
-            // ToDo - check what we're passing back, wordgrid is undefined
-            var hiddenWordSearch = new WordSearch.HiddenWordSearch(title, rows, cols, hiddenWords);
+                 
+            var hiddenWordSearch = new WordSearchGrid(title, rows, cols, hiddenWords);
 
             var wordSearchModel = new WordSearchModel();
             wordSearchModel.Title = title;

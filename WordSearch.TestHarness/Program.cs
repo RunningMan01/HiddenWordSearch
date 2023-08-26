@@ -17,7 +17,7 @@ var words = new List<string>()
     "Thailand"
 };
 
-var wordSearch = new HiddenWordSearch("my word search", 15, 15, words);
+var wordSearch = new WordSearchGrid("my word search", 15, 15, words);
 // wordSearch.Grid.
 Console.WriteLine(wordSearch.WordGrid.ToString());
 //var location = new Location();

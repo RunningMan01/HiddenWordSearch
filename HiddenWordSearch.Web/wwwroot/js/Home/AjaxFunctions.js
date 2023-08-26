@@ -12,7 +12,7 @@ class AjaxFunctions {
         }
 
         if (request != null) {
-            var url = "/Home/GetWordSearch";
+            var url = "/Home/GetWordSearch";    // todo - better to use HtmlHelper
             request.open("POST", url);
             request.setRequestHeader("Content-Type", "application/json");
             request.onreadystatechange = function () {
@@ -26,7 +26,7 @@ class AjaxFunctions {
 
             console.log("Title: " + settings.title);
             console.log("Rows: " + settings.rows);
-            console.log("Cols: " + settings.cols);
+            console.log("Cols: " + settings.columns);   // Cols
             console.log("Words: " + settings.words);
             request.send(JSON.stringify(settings));
         }
