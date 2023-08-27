@@ -17,10 +17,12 @@ var words = new List<string>()
     "Thailand"
 };
 
-var wordSearch = new WordSearchGrid("my word search", 15, 15, words);
+// ToDo - following line (maybes class) needs updating to use DI
+//var wordSearch = new WordSearchGrid(15, 15, words);
+
 // wordSearch.Grid.
-Console.WriteLine(wordSearch.WordGrid.ToString());
+//Console.WriteLine(wordSearch.WordGrid.ToString());
 //var location = new Location();
 
-Console.ReadKey();
+//Console.ReadKey();
 

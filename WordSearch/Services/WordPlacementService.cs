@@ -11,6 +11,12 @@ namespace WordSearch.Services
 {
     public class WordPlacementService : IWordPlacementService
     {
+        /// <summary>
+        /// Given a HiddenWord word with a start location, check if it can be placed at this start location
+        /// </summary>
+        /// <param name="word"></param>
+        /// <param name="grid"></param>
+        /// <returns></returns>
         public bool CanWordStartAtLocation(HiddenWord word, char[,] grid)
         {
             var canStart = true;
@@ -36,6 +42,12 @@ namespace WordSearch.Services
             return canStart;
         }
 
+        /// <summary>
+        /// Place the HiddenWord word within the grid
+        /// </summary>
+        /// <param name="word"></param>
+        /// <param name="grid"></param>
+        /// <returns></returns>
         public char[,] PlaceWordAtLocation(HiddenWord word, char[,] grid)
         {
             var rowDelta = word.Direction.GetRowDelta();
@@ -52,6 +64,12 @@ namespace WordSearch.Services
             return updatedGrid;
         }
 
+        /// <summary>
+        /// Checks whether the HiddenWord word is within the grid limits
+        /// </summary>
+        /// <param name="word"></param>
+        /// <param name="grid"></param>
+        /// <returns></returns>
         public bool WordWithinGridLimits(HiddenWord word, char[,] grid)
         {
             var endLocation = word.GetEndLocation();
