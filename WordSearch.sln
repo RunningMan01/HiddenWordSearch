@@ -9,6 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WordSearch", "WordSearch\Wo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E5AC7AD-E1FB-4C03-9E32-15F575D35BB4}"
 	ProjectSection(SolutionItems) = preProject
+		ImplementationNotes.txt = ImplementationNotes.txt
 		ToDo.txt = ToDo.txt
 	EndProjectSection
 EndProject
@@ -16,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WordSearch.Tests", "WordSea
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HiddenWordSearch.Web", "HiddenWordSearch.Web\HiddenWordSearch.Web.csproj", "{58909946-764E-46BF-B58B-93AB683CE40F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordSearch.Resources", "WordSearch.Resources\WordSearch.Resources.csproj", "{794E3958-BD0D-4138-BFF6-B51C07E1AA40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WordSearch.Resources", "WordSearch.Resources\WordSearch.Resources.csproj", "{794E3958-BD0D-4138-BFF6-B51C07E1AA40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

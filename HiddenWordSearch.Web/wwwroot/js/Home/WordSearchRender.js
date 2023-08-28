@@ -2,8 +2,11 @@
 
 class WordSearchRender {
     #colours = ["red", "green", "blue", "purple", "orange"];
+    #letterHighlightColour = "white";
     #currentColour = 0;
     #startLetterImage = null;
+    #wordSearchId = "cardWordSearch";
+    #welcomeId = "cardWelcome";
 
     constructor(canvasId) {
         this.canvasId = canvasId;
@@ -15,7 +18,7 @@ class WordSearchRender {
         this.grid = null;
     }
 
-    // cross out hidden word just found in the list
+    // cross out found word in the list
     crossOutWord(word) {
         word = word.toUpperCase();
 
@@ -26,8 +29,8 @@ class WordSearchRender {
         }
     }
 
-    // copy part of the grid user has just clicked on as start letter. this is restored if user clicks on
-    // end location that does not select a hidden word
+    // Make a copy of starting letter prior to highlighting it. This will be restored if a correct word
+    // is not found    
     copyLetterImage(startLetterLocation) {
         var screenPos = this.#getScreenPositionFromRowColumn(startLetterLocation.row, startLetterLocation.column);
         screenPos.x -= this.fontSize / 2.0;
@@ -35,8 +38,7 @@ class WordSearchRender {
         this.#startLetterImage = this.ctx.getImageData(screenPos.x, screenPos.y, this.fontSize, this.fontSize);
     }
 
-    // redraws the part of the grid previously highlighted as user has clicked a word that is not in
-    // the hidden word list
+    // Restore copied image of start letter taken prior to highlighting
     replaceLetterImage(startLetterLocation) {
         var screenPos = this.#getScreenPositionFromRowColumn(startLetterLocation.row, startLetterLocation.column);
         screenPos.x -= this.fontSize / 2.0;
@@ -44,7 +46,7 @@ class WordSearchRender {
         this.ctx.putImageData(this.#startLetterImage, screenPos.x, screenPos.y);
     }
 
-    // highlights the found hidden word
+    // draws a line to highlight the found hidden word
     highlightWord(startLocation, endLocation) {
         this.#fillInWord(startLocation, endLocation);
         this.#fillInLetters(startLocation, endLocation);
@@ -53,9 +55,9 @@ class WordSearchRender {
 
     // draws word search grid
     renderGrid(hiddenWordSearch) {
-        this.grid = new Array(hiddenWordSearch.wordGrid.rows); // ToDo - not sure about this line, move it
-        this.#hideElement("cardWelcome");
-        this.#showElement("cardWordSearch");        
+        this.grid = new Array(hiddenWordSearch.wordGrid.rows);
+        this.#hideElement(this.#welcomeId);
+        this.#showElement(this.#wordSearchId);        
         this.#setWordSearchTitle(hiddenWordSearch.title)
         this.#createWordSearchCanvas(hiddenWordSearch);
         this.#createWordSearchGrid(hiddenWordSearch);
@@ -63,15 +65,15 @@ class WordSearchRender {
     }
 
     // highlights the letter given by location, used when user clicks on a start letter
-    highlightLetter(location) {
+    highlightLetter(location) {      
+        console.log(`highlightLetter: Row ${location.row}, Column ${location.column}`); 
+        
         // given the row and column, find centre point of the letter
-        console.log(`highlightLetter: Row ${location.row}, Column ${location.column}`);              
-
         var screenPos = this.#getScreenPositionFromRowColumn(location.row, location.column);
         
         var letter = this.grid[location.row][location.column];
         this.#drawCircle(screenPos.x, screenPos.y);
-        this.#drawLetter(screenPos.x, screenPos.y, "white", letter);
+        this.#drawLetter(screenPos.x, screenPos.y, this.#letterHighlightColour, letter);
     }
 
     // create canvas that word search grid will be drawn on
@@ -86,7 +88,7 @@ class WordSearchRender {
         this.ctx.textBaseline = "middle";
         this.ctx.font = "24px Arial Black";
 
-        this.#showElement("cardWordSearch");
+        this.#showElement(this.#wordSearchId);
     }
 
     // draw all letters of the grid on the page
@@ -177,7 +179,7 @@ class WordSearchRender {
         } while (!reachedEnd);
     }
 
-    // returns actual x, y position relative to top left corner of the canvas, given the row and column
+    // returns actual screen x, y position relative to top left corner of the canvas, given the row and column
     #getScreenPositionFromRowColumn(row, column) {
         var x = (column + 1) * this.fontSize;
         if (column > 0) {
@@ -232,8 +234,7 @@ class WordSearchRender {
 
     // draws the highlighted letter white to stand out a bit more
     #drawLetter(x, y, colour, letter) {
-        this.ctx.fillStyle = "white";
+        this.ctx.fillStyle = colour;
         this.ctx.fillText(letter, x, y);
     }
-
 }

@@ -15,15 +15,15 @@ namespace WordSearch.Extensions
         }
 
         public static DirectionEnum MoveNext(this DirectionEnum direction)
-        {            
+        {
             var maxDirection = Convert.ToInt32(direction.GetMax());
             var nextDirection = (Convert.ToInt32(direction) + 1) % maxDirection;
 
             return (DirectionEnum)nextDirection;
         }
-        
+
         public static int GetRowDelta(this DirectionEnum direction)
-        {                    
+        {
             switch (direction)
             {
                 case DirectionEnum.Up:
@@ -74,7 +74,8 @@ namespace WordSearch.Extensions
             return grid.GetUpperBound(1);
         }
 
-        public static string AsString(this char[,] grid) {
+        public static string AsString(this char[,] grid)
+        {
             return AsString(grid, false);
         }
 
@@ -103,7 +104,25 @@ namespace WordSearch.Extensions
 
         public static bool CanPlaceCharacter(this char[,] grid, Location location, char ch)
         {
+            var maxRow = grid.GetUpperBound(0);
+            var maxColumn = grid.GetUpperBound(1);
+            if (location.Row > maxRow) return false;
+            if (location.Column > maxColumn) return false;
+
             return grid[location.Row, location.Column] == ch || grid[location.Row, location.Column] == ' ';
+        }
+
+        public static void Fill(this char[,] grid, char fillChar)
+        {
+            var rows = grid.GetUpperBound(0);
+            var columns = grid.GetUpperBound(1);
+            for (var row = 0; row <= rows; row++)
+            {
+                for (var column = 0; column <= columns; column++)
+                {
+                    grid[row, column] = fillChar;
+                }
+            }
         }
     }
 }

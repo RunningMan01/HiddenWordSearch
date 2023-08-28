@@ -1,10 +1,15 @@
-﻿@model WordSearch.HiddenWordSearch
+﻿@model WordSearch.WordSearchGrid
 
 <div id="cardWordSearch" class="card" style="display:none">
-  <h5 id="wordSearchDisplayTitle" class="card-header text-center">Word Search Title</h5>
+  <div class="card-header text-center">
+      <h5 style="display:inline-block" id="wordSearchDisplayTitle">Some header</h5>
+      <button id="buttonEditWordSearch" class="btn" style="float:right">Edit</button>
+      <button id="buttonRegenerateWordSearch" class="btn" style="float:right">Regenerate</button>
+  </div>
+ 
   <div class="card-body">
     <div id="wordSearch" class="flex-container">
-      <div class="shadow body-rounded" style="border:4px solid black;border-radius:20px;">    
+      <div class="shadow body-rounded" style="border:4px solid black;border-radius:20px;">
         <canvas id="canvasGrid"></canvas>
       </div>
       <div>&nbsp;&nbsp;&nbsp;</div>

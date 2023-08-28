@@ -4,7 +4,7 @@
     { 
         public string Title { get; set; } = string.Empty;
         public int Rows { get; set; }
-        public int Cols { get; set; }
+        public int Columns { get; set; } // Cols
         public string Words { get; set; } = string.Empty;
     }
 }

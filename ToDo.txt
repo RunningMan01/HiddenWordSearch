@@ -1,6 +1,29 @@
+Next steps
+
+1. Tidy up and document where solution is 
+- Check any bugs
+- Save wordsearches, allow search, retrieval ??
+
+1. Look at editWordSearch method in index.js
+
+
 1. Modify classes so eg. HiddenWord public methods aren't exposed to calling client - done
 2. Error words should be just a string
 3. If really keen could add error handling to check for valid range of values entered etc.
+4. Do this next - Remove default values from _configureModal, pass these in to constructor method and implement Edit function
+    ** Recode modalConfigure to pass in array of property / values items and retrieve an array of property / item values
+	** add public property for wordSearchConfigruation
+	** Also need to act according to whether cancel was clicked
+    ** Place Edit and regenerate options above card showing word search itself **
+	Would need additional Edit button 
+	Edit button would need access to wordsearch settings
+	Configure modal passed in current settings
+	Have a regenerate button as well to recreate wordsearch with current settings
+
+- Add menu items to allow New word search to be generated - New, Load, Save
+- Remove default word search settings - countries
+- Unit test coverage
+- Some sort of documentation - class diagrams
 
 UI front end
 separate javascript object / partial view
